@@ -43,14 +43,15 @@ const WelcomeBtn = styled.button`
   background-size: 4px 3px;
   border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
   border-style: solid;
+  border-color: #41403e;
   border-width: 2px;
   box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
   box-sizing: border-box;
   color: #41403e;
   cursor: pointer;
   display: inline-block;
-  font-family: Neucha, sans-serif;
-  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+    font-size: .9rem;
   line-height: 23px;
   outline: none;
   padding: 0.75rem 1.5rem;
@@ -79,7 +80,7 @@ const WelcomeBtn = styled.button`
 export default function Welcome({ handleClick }) {
   return (
     <WelcomeSection >
-      <h1>Welcome to Notes with Nuance</h1>
+      <h1>Welcome to Simple Signup UI</h1>
       <div className="btn-wrap">
         <WelcomeBtn onClick={handleClick} value="Log In">Log In</WelcomeBtn>
         <WelcomeBtn onClick={handleClick} value="Sign Up">Sign Up</WelcomeBtn>

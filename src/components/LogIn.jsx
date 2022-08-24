@@ -20,10 +20,10 @@ const LogInForm = styled.form`
     border: none;
     width: 100%;
     text-indent: 10px;
-    font-size: .7rem;
+    font-size: 0.7rem;
     font-weight: 300;
-    opacity: .8;
-    padding: 2px 0;;
+    opacity: 0.8;
+    padding: 2px 0;
   }
 
   label {
@@ -32,7 +32,7 @@ const LogInForm = styled.form`
     opacity: 0.65;
     margin: 8px 0;
     display: inline-block;
-    transition: .235s;
+    transition: 0.235s;
   }
 
   label::before {
@@ -42,7 +42,6 @@ const LogInForm = styled.form`
     background-color: black;
     bottom: 10%;
   }
-  
 `;
 
 const SignUpBtn = styled(WelcomeBtn)`
@@ -50,15 +49,14 @@ const SignUpBtn = styled(WelcomeBtn)`
   margin: 45px;
 
   &:hover {
-        background: #BED4CD;
-        color: white;
-    }
+    background: #bed4cd;
+    color: white;
+  }
 `;
 
-
 const LabelDiv = styled.div`
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 
   &::before {
     position: absolute;
@@ -67,7 +65,7 @@ const LabelDiv = styled.div`
     height: 1px;
     background: #528876;
     top: 25px;
-    transition: .235s;
+    transition: 0.235s;
     transform: translateX(-100%);
     opacity: 0;
     border-radius: 10px;
@@ -79,24 +77,55 @@ const LabelDiv = styled.div`
   }
 
   &:hover label {
-    transform: scale(.95);
-    color: #587D87;
+    transform: scale(0.95);
+    color: #587d87;
   }
-
 `;
 
-
 export default function LogIn() {
+  const [formData, setFormData] = React.useState({
+    userName: "",
+    password: "",
+  });
+
+  function handleChange(event) {
+    const { name, value, type, checked } = event.target;
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    // submitToApi(formData)
+    console.log(formData);
+  }
+
   return (
-    <LogInForm>
+    <LogInForm onSubmit={handleSubmit}>
       <h2>Welcome back!</h2>
       <LabelDiv>
         <label htmlFor="userName">User Name</label>
-        <input type="text" name="userName" id="userName" required />
+        <input
+          onChange={handleChange}
+          value={formData.userName}
+          type="text"
+          name="userName"
+          required
+        />
       </LabelDiv>
       <LabelDiv>
         <label htmlFor="password">Password </label>
-        <input type="password" name="password" id="password" required />
+        <input
+          onChange={handleChange}
+          value={formData.password}
+          type="password"
+          name="password"
+          required
+        />
       </LabelDiv>
       <SignUpBtn type="submit" name="login">
         Log In

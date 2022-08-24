@@ -19,10 +19,10 @@ const UserForm = styled.form`
     border: none;
     width: 100%;
     text-indent: 10px;
-    font-size: .7rem;
+    font-size: 0.7rem;
     font-weight: 300;
-    opacity: .8;
-    padding: 2px 0;;
+    opacity: 0.8;
+    padding: 2px 0;
   }
   label {
     position: relative;
@@ -63,7 +63,7 @@ const LabelDiv = styled.div`
     position: absolute;
     content: "";
     width: 50px;
-    height: .75px;
+    height: 0.75px;
     background: #528876;
     top: 22px;
     transition: 0.235s;
@@ -84,14 +84,14 @@ const LabelDiv = styled.div`
 `;
 
 const SpecalLabelDiv = styled(LabelDiv)`
-      position: relative;
+  position: relative;
   overflow: hidden;
 
   &::before {
     position: absolute;
     content: "";
     width: 28px;
-    height: .75px;
+    height: 0.75px;
     background: #528876;
     top: 22px;
     transition: 0.235s;
@@ -109,48 +109,111 @@ const SpecalLabelDiv = styled(LabelDiv)`
     transform: scale(0.95);
     color: #587d87;
   }
-
-`
+`;
 
 export default function SignUp({}) {
+  const [formData, setFormData] = React.useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  function handleChange(event) {
+    const { name, value, type, checked } = event.target;
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    // submitToApi(formData)
+
+    fetch('http://localhost:5000/register', {
+      method: 'POST',
+      headers: {"Content-Type" : "application/json"},
+      body: JSON.stringify(formData)
+    }).then(()=> {
+      console.log("New User Added!")
+    })
+
+    console.log(formData);
+  }
+
   return (
-    <UserForm>
+    <UserForm onSubmit={handleSubmit}>
       <h2>Sign up to start writing your first nuanced note!</h2>
       <div className="name">
         <div className="firstname">
           <LabelDiv>
-            <label htmlFor="firstName" name="firstName" id="firstName" required>
-              First Name
-            </label>
-            <input type="text" />
+            <label htmlFor="firstName">First Name</label>
+            <input
+              onChange={handleChange}
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              required
+            />
           </LabelDiv>
         </div>
         <div className="lastname">
           <LabelDiv>
-            <label htmlFor="lastName" name="lastName" id="lastName" required>
-              Last Name
-            </label>
-            <input type="text" />
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              onChange={handleChange}
+              value={formData.lastName}
+              type="text"
+              name="lastName"
+              required
+            />
           </LabelDiv>
         </div>
       </div>
       <LabelDiv>
-        <label htmlFor="userName" name="userName" id="userName" required>
-          User Name
-        </label>
-        <input type="text" />
+        <label htmlFor="userName">User Name</label>
+        <input
+          onChange={handleChange}
+          value={formData.userName}
+          type="text"
+          name="userName"
+          required
+        />
       </LabelDiv>
       <SpecalLabelDiv>
         <label htmlFor="email">Email </label>
-        <input type="email" name="email" id="email" required />
+        <input
+          onChange={handleChange}
+          value={formData.email}
+          type="email"
+          name="email"
+          required
+        />
       </SpecalLabelDiv>
       <LabelDiv>
         <label htmlFor="password">Password </label>
-        <input type="password" name="password" id="password" required />
+        <input
+          onChange={handleChange}
+          value={formData.password}
+          type="password"
+          name="password"
+          required
+        />
       </LabelDiv>
       <LabelDiv>
         <label htmlFor="password">Confirm Password </label>
-        <input type="password" name="password" id="confirmPassword" required />
+        <input
+          onChange={handleChange}
+          value={formData.confirmPassword}
+          type="password"
+          name="confirmPassword"
+          required
+        />
       </LabelDiv>
       <SignUpBtn type="submit" name="signup">
         Sign Up
